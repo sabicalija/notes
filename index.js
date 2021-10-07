@@ -9,5 +9,7 @@ function handleClick(/* event */) {
     const item = document.createElement("li");
     item.textContent = note;
     list.appendChild(item);
+    input.value = "";
+    input.focus();
   }
 }
