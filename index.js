@@ -14,6 +14,11 @@ function handleKeyDown(event) {
   }
 }
 
+function handleClickLIItem(event) {
+  const list = document.getElementById("list");
+  list.removeChild(event.target);
+}
+
 function add() {
   const input = document.getElementById("text");
   const note = input.value;
@@ -21,6 +26,7 @@ function add() {
     const list = document.getElementById("list");
     const item = document.createElement("li");
     item.textContent = note;
+    item.addEventListener("click", handleClickLIItem);
     list.appendChild(item);
     input.value = "";
     input.focus();
