@@ -11,16 +11,21 @@ let notes = [
 function buildLIItem(note) {
   const item = document.createElement("li");
   item.id = note.id;
+  item.classList.add("note");
 
   const article = document.createElement("article");
   const title = document.createElement("header");
   title.textContent = note.title;
+  title.classList.add("note__title");
   const text = document.createElement("p");
   text.textContent = note.text;
+  text.classList.add("note__text");
 
   const controls = document.createElement("div");
+  controls.classList.add("note__controls");
   const button = document.createElement("button");
   button.textContent = "Delete";
+  button.classList.add("note__controls__delete");
   button.addEventListener("click", handleClickDelete(note.id));
   controls.appendChild(button);
 
