@@ -1,8 +1,8 @@
 // Model
 const notes = [
-  // "Note 1",
-  // "Note 2",
-  // "Note 3"
+  // { id: "676c9ba771", title: "Title 1", text: "ToDo 1" },
+  // { id: "dc19d1538f", title: "Title 2", text: "ToDo 2" },
+  // { id: "fd8c75b4fb", title: "Title 3", text: "ToDo 2" },
   // ...
 ];
 
@@ -19,19 +19,10 @@ function buildLIItem(note) {
 document.addEventListener("DOMContentLoaded", function () {
   const button = document.getElementById("add");
   button.addEventListener("click", handleClick);
-
-  const input = document.getElementById("text");
-  input.addEventListener("keydown", handleKeyDown);
 });
 
 function handleClick(/* event */) {
   add();
-}
-
-function handleKeyDown(event) {
-  if (event.key === "Enter") {
-    add();
-  }
 }
 
 function handleClickLIItem(event) {
