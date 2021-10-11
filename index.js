@@ -1,5 +1,5 @@
 // Model
-const notes = [
+let notes = [
   // { id: "676c9ba771", title: "Title 1", text: "ToDo 1" },
   // { id: "dc19d1538f", title: "Title 2", text: "ToDo 2" },
   // { id: "fd8c75b4fb", title: "Title 3", text: "ToDo 2" },
@@ -33,12 +33,12 @@ function buildLIItem(note) {
 
 // Controller
 document.addEventListener("DOMContentLoaded", function () {
-  const button = document.getElementById("add");
-  button.addEventListener("click", handleClick);
+  init();
 });
 
 function handleClick(/* event */) {
   add();
+  save();
 }
 
 function handleClickDelete(id) {
@@ -48,6 +48,7 @@ function handleClickDelete(id) {
     list.removeChild(item);
     const pos = notes.findIndex((note) => note.id === id);
     notes.splice(pos, 1);
+    save();
   };
 }
 
@@ -74,4 +75,29 @@ function generateId(title, text, length = 10) {
   return CryptoJS.SHA256(title + text + new Date())
     .toString()
     .substring(0, length);
+}
+
+function init() {
+  registerEventHandlers();
+  load();
+  draw();
+}
+
+function registerEventHandlers() {
+  const button = document.getElementById("add");
+  button.addEventListener("click", handleClick);
+}
+
+function load() {
+  notes = JSON.parse(localStorage.getItem("notes")) || [];
+}
+
+function save() {
+  localStorage.setItem("notes", JSON.stringify(notes));
+}
+
+function draw() {
+  const list = document.getElementById("list");
+  while (list.firstChild) list.removeChild(list.firstChild);
+  notes.forEach((note) => list.appendChild(buildLIItem(note)));
 }
