@@ -1,3 +1,21 @@
+// Model
+const notes = [
+  // "Note 1",
+  // "Note 2",
+  // "Note 3"
+  // ...
+];
+
+// View
+// see HTML
+function buildLIItem(note) {
+  const item = document.createElement("li");
+  item.textContent = note;
+  item.addEventListener("click", handleClickLIItem);
+  return item;
+}
+
+// Controller
 document.addEventListener("DOMContentLoaded", function () {
   const button = document.getElementById("add");
   button.addEventListener("click", handleClick);
@@ -26,10 +44,9 @@ function add() {
   const note = input.value;
   if (note) {
     const list = document.getElementById("list");
-    const item = document.createElement("li");
-    item.textContent = note;
-    item.addEventListener("click", handleClickLIItem);
+    const item = buildLIItem(note);
     list.appendChild(item);
+    notes.push(note);
     input.value = "";
     input.focus();
   }
