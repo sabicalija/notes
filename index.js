@@ -27,7 +27,7 @@ function buildLIItem(note) {
   button.classList.add("note__controls__delete");
   button.addEventListener("click", handleClickDelete(note.id));
   const icon = document.createElement("i");
-  icon.classList.add("fas", "fa-trash");
+  icon.classList.add("fas", "fa-trash", "fa-2x");
   button.appendChild(icon);
   controls.appendChild(button);
 
