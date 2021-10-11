@@ -129,3 +129,21 @@ body {
     flex: 0 1 calc(100% - 4rem);
   }
 }
+
+.slide-in {
+  animation-name: slide;
+  animation-duration: 200ms;
+  animation-delay: 0;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-direction: normal;
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(100vw);
+  }
+  to {
+    transform: translateX(0);
+  }
+}

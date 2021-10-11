@@ -8,10 +8,10 @@ let notes = [
 
 // View
 // see HTML
-function buildLIItem(note) {
+function buildLIItem(note, classNames = []) {
   const item = document.createElement("li");
   item.id = note.id;
-  item.classList.add("note");
+  item.classList.add("note", ...classNames);
 
   const article = document.createElement("article");
   const title = document.createElement("header");
@@ -95,7 +95,7 @@ function add() {
   if (title.value || text.value) {
     const list = document.getElementById("list");
     const note = createNote(title.value, text.value);
-    const item = buildLIItem(note);
+    const item = buildLIItem(note, ["slide-in"]);
     list.appendChild(item);
     notes.push(note);
     title.value = "";
