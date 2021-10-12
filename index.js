@@ -6,12 +6,22 @@ let notes = [
   // ...
 ];
 
+let colors = [
+  { background: "#fff740", shadow: "1px 1px 4px 1px #bfb700" },
+  { background: "#feff9c", shadow: "1px 1px 4px 1px #a3a400" },
+  { background: "#7afcff", shadow: "1px 1px 4px 1px #009397" },
+  { background: "#ff65a3", shadow: "1px 1px 4px 1px #8e0039" },
+  { background: "#ff7eb9", shadow: "1px 1px 4px 1px #980046" },
+];
+
 // View
 // see HTML
 function buildLIItem(note, classNames = []) {
   const item = document.createElement("li");
   item.id = note.id;
   item.classList.add("note", ...classNames);
+  if (note.color) item.style.background = note.color;
+  if (note.shadow) item.style.boxShadow = note.shadow;
 
   const article = document.createElement("article");
   const title = document.createElement("header");
@@ -93,9 +103,11 @@ function handleUpdate(worker) {
 function add() {
   const title = document.getElementById("title");
   const text = document.getElementById("text");
+  const background = title.parentNode.style.background;
+  const shadow = title.parentNode.style.boxShadow;
   if (title.value || text.value) {
     const list = document.getElementById("list");
-    const note = createNote(title.value, text.value);
+    const note = createNote(title.value, text.value, background, shadow);
     const item = buildLIItem(note, ["slide-in"]);
     list.appendChild(item);
     notes.push(note);
@@ -104,9 +116,9 @@ function add() {
   }
 }
 
-function createNote(title, text) {
+function createNote(title, text, color, shadow) {
   const id = generateId(title, text);
-  return { id, title, text };
+  return { id, title, text, color, shadow };
 }
 
 function generateId(title, text, length = 10) {
@@ -117,6 +129,7 @@ function generateId(title, text, length = 10) {
 
 function init() {
   registerEventHandlers();
+  initInputControls();
   load();
   draw();
   registerServiceWorker();
@@ -140,6 +153,28 @@ function registerServiceWorker() {
       .then((registration) => handleRegistration(registration))
       .catch((error) => console.log("Service Worker registration failed!", error));
   }
+}
+
+function initInputControls() {
+  const input = document.getElementById("title").parentNode;
+  const color = document.getElementById("color");
+  const container = document.createElement("div");
+  container.classList.add("input__color-palette");
+  container.style.display = "none";
+  for (const color of colors) {
+    const button = document.createElement("button");
+    button.style.background = color.background;
+    button.classList.add("input__color-palette-select");
+    button.addEventListener("click", function () {
+      input.style.background = color.background;
+      input.style.boxShadow = color.shadow;
+    });
+    container.appendChild(button);
+  }
+  color.appendChild(container);
+  color.addEventListener("click", function () {
+    container.style.display = container.style.display === "none" ? "flex" : "none";
+  });
 }
 
 function load() {
